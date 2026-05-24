@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import socket from "../../services/socket";
+import socket from "../services/socket";
 
 const JoinRoom = () => {
   const navigate = useNavigate();

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import socket from "../../services/socket";
+import socket from "../services/socket";
 
 const CreateRoom = () => {
   const navigate = useNavigate();
