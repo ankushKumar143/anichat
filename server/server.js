@@ -1,0 +1,16 @@
+const http = require("http");
+const { Server } = require("socket.io");
+const app = require("./src/app.js");
+const socketHandler = require("./src/sockets/socket.js");
+const server = http.createServer(app);
+const io = new Server(server, {
+    cors: {
+        origin: "*"
+    }
+}); 
+
+socketHandler(io)
+
+server.listen(3000, () => {
+    console.log("Server is running on port 3000");
+});
