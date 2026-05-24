@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import CreateRoom from "../components/landing/CreateRoom";
-import JoinRoom from "../components/landing/JoinRoom";
+import CreateRoom from "../components/CreateRoom";
+import JoinRoom from "../components/JoinRoom";
 
 const Landing = () => {
   const [mode, setMode] = useState(null);
