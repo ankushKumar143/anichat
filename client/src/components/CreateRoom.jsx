@@ -43,22 +43,67 @@ const CreateRoom = () => {
     };
   }, [username, navigate]);
   return (
-    <div className="flex flex-col gap-8 rounded-xl text-3xl m-5 px-16 py-10 bg-gray-800 w-75">
+    <div
+      className="flex 
+          flex-col 
+          gap-8 
+          md:gap-16
+          bg-white/10 
+          backdrop-blur-[1px] 
+          border 
+          border-white/20 
+          shadow-lg 
+          rounded-xl 
+          text-3xl 
+          m-5 
+          px-16 
+          py-10 
+          md:px-32 
+          md:py-20
+          w-75
+          md:w-140
+        "
+    >
       <input
         type="text"
         placeholder="Username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
-        className="bg-gray-700 rounded-lg py-4 px-6 text-white outline-none text-xl"
+        className="backdrop-blur-[3px] 
+          border 
+          placeholder:text-gray-300 
+          border-white/20 
+          shadow-lg 
+          rounded-lg 
+          py-4 px-6 
+          text-white 
+          outline-none 
+          text-xl
+        "
       />
       <input
         type="text"
         placeholder="Room ID"
         value={roomId}
         onChange={(e) => setRoomID(e.target.value)}
-        className="bg-gray-700 rounded-lg py-4 px-6 text-white outline-none text-xl"
+        className="backdrop-blur-[3px] 
+          border 
+          placeholder:text-gray-300
+          border-white/20 
+          shadow-lg 
+          rounded-lg 
+          py-4 
+          px-6 
+          text-white 
+          outline-none 
+          text-xl
+        "
       />
-      <button onClick={HandleSubmit} className="text-2xl">
+      <button
+        onClick={HandleSubmit}
+        className="text-2xl md:text-4xl font-semibold"
+        style={{ textShadow: "2px 2px 10px black" }}
+      >
         Create Room
       </button>
     </div>

@@ -3,3 +3,7 @@
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+.custom-placeholder::placeholder {
+  text-shadow: 2px 2px 10px black;
+}

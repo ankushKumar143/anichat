@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Send } from "lucide-react";
+import { Send, Smile } from "lucide-react";
 import { useParams, useLocation } from "react-router-dom";
 import socket from "../services/socket";
+import EmojiPicker from "emoji-picker-react";
 
 const ChatRoom = () => {
   const bottomRef = useRef(null);
@@ -11,6 +12,7 @@ const ChatRoom = () => {
 
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState("");
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
   useEffect(() => {
     // JOIN ROOM
@@ -78,17 +80,27 @@ const ChatRoom = () => {
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" }, [messages]);
   });
+
+  //Emoji Picker
+  const handleEmoji = (emoji) => {
+    setMessage((prev) => prev + emoji.emoji);
+  };
   return (
     <div className="bg-gray-600 h-dvh overflow-hidden">
-      <div className="bg-gray-800  fixed top-0 left-0 w-full h-12">
-        <h1 className="text-2xl px-5 py-2 font-bold text-white">AniChat</h1>
+      {/* Header */}
+      <div className="bg-gray-800 fixed top-0 left-0 w-full h-12 md:h-16 md:px-5 flex items-center">
+        <h1 className="text-2xl md:text-4xl px-5 py-2 font-bold text-white">
+          AniChat
+        </h1>
       </div>
+
+      {/* Messages */}
       <div className="flex flex-col pt-16 pb-20 overflow-y-auto scroll-auto hide-scrollbar h-full">
         {messages.map((msg, index) => {
           //System Msg
           if (msg.system) {
             return (
-              <div className="flex justify-center text-white text-xs">
+              <div className="flex justify-center text-white text-xs md:text-sm">
                 {msg.message}
               </div>
             );
@@ -103,12 +115,14 @@ const ChatRoom = () => {
               key={index}
               className={`${
                 msg.username === username
-                  ? "bg-white text-gray-800 self-end"
-                  : "bg-gray-900 text-white self-start"
+                  ? "bg-white text-gray-800 md:mr-10 self-end"
+                  : "bg-gray-900 text-white md:ml-10 self-start"
               }
                 px-5
                 py-3
                 m-2
+                text-x
+                md:text-xl
                 rounded-2xl
                 max-w-[75%]
                 wrap-break-words
@@ -119,6 +133,7 @@ const ChatRoom = () => {
                   <span
                     className="
                       text-[10px]
+                      md:text-sm
                       font-bold
                       text-gray-400
                       mb-1
@@ -136,17 +151,45 @@ const ChatRoom = () => {
         })}
         <div ref={bottomRef}></div>
       </div>
-      <div className="fixed bottom-0 left-0 w-full flex justify-between bg-gray-800 h-15">
+
+      {/* Footer */}
+      <div className="fixed bottom-0 left-0 w-full flex justify-between bg-gray-800 h-15 md:h-20">
+        {/*Emoji Picker UI*/}
+        {showEmojiPicker && (
+          <div className="absolute bottom-12 z-50">
+            <EmojiPicker onEmojiClick={handleEmoji} />
+          </div>
+        )}
+
+        {/*Emoji Picker*/}
+        <button
+          className="w-[15%] flex items-center justify-center h-12 m-auto"
+          onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+        >
+          <Smile className="text-white" size={30} />
+        </button>
+
+        {/*Message Input*/}
         <input
           className="w-[85%] px-5 rounded-xl h-12 my-auto mx-2 outline-none bg-gray-400"
           type="text"
           placeholder="Send Message"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              sendMsg();
+            }
+          }}
+          onFocus={() => {
+            setShowEmojiPicker(false);
+          }}
         />
+
+        {/*Send Button*/}
         <button
           onClick={sendMsg}
-          className="w-[15%] flex items-center justify-center h-12 m-auto"
+          className="w-[15%] flex items-center justify-center text-xl h-12 m-auto"
         >
           <Send className="text-white" size={30} />
         </button>
